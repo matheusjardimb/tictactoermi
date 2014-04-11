@@ -1,10 +1,14 @@
 package com.matheusjardimb.client;
 
-import java.net.MalformedURLException;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
+import java.util.Scanner;
 
+import com.matheusjardimb.Match;
 import com.matheusjardimb.exception.InvalidPlayerNameException;
 import com.matheusjardimb.exception.PlayerLimitReachedException;
 
@@ -12,25 +16,24 @@ public class GameClient {
 	private static final int RETRY = 2 * 1000; // 2sec
 
 	public static void main(String[] args) {
-		if (args.length != 2) {
-			System.out.println("Uso: java NotasClient <maquina> <nome>");
+		if (args.length != 1) {
+			System.out.println("Uso: java NotasClient <maquina>");
 			System.exit(1);
 		}
 
 		String server = args[0];
-		String name = args[1];
 
 		try {
-			executeGame(server, name);
+			executeGame(server);
 		} catch (Exception e) {
-			System.out.println("NotasClient failed." + e.getMessage());
-			e.printStackTrace();
+			System.err.println("<<ERRO>> " + e.getMessage());
 		}
 	}
 
 	private static Integer obtemPartida(GameInterface game, Integer id) throws RemoteException {
-		int res = 0;
-		while (res == 0) {
+		int res = Match.NO_MATCH;
+		while (res == Match.NO_MATCH) {
+			System.out.println("...Buscando por um oponente...");
 			res = game.temPartida(id);
 
 			try {
@@ -41,36 +44,58 @@ public class GameClient {
 		return res;
 	}
 
-	private static void executeGame(String server, String name) throws MalformedURLException, RemoteException, NotBoundException, InvalidPlayerNameException, PlayerLimitReachedException {
+	/**
+	 * TODO
+	 * 
+	 * 1.Destruir a partida se ambos os usuarios conhecem o resultado, mesmo sem
+	 * ter acabado o prazo
+	 * 
+	 * 2. JavaDoc
+	 */
+
+	/**
+	 * @throws IOException
+	 * @throws NotBoundException
+	 * @throws InvalidPlayerNameException
+	 * @throws PlayerLimitReachedException
+	 * @throws IOException
+	 * */
+	private static void executeGame(String server) throws NotBoundException, InvalidPlayerNameException, PlayerLimitReachedException, IOException {
 		GameInterface game = (GameInterface) Naming.lookup("//" + server + "/Notas");
 
-		Integer id1 = game.registraJogador(name + "1");
-		Integer id2 = game.registraJogador(name + "2");
-		System.out.println(id1 + " " + id2);
-		System.out.println(game.obtemGrade(id1));
+		System.out.println("Digite seu nome: ");
+		String name = readString();
+		
+		Integer id = game.registraJogador(name);
+		System.out.println("Olá, " + name + ", seu id é " + id);
 
-		Integer resp1 = obtemPartida(game, id1);
-		Integer resp2 = obtemPartida(game, id2);
-		System.out.println(resp1 + " " + resp2);
+		Integer resp1 = obtemPartida(game, id);
+		System.out.println("Oponente encontrado!");
 
-		String name2 = game.obtemOponente(id1);
-		String name1 = game.obtemOponente(id2);
-		System.out.println(name1 + " vs " + name2);
+		String opponent = game.obtemOponente(id);
+		System.out.println("Seu oponente é: " + opponent);
+		displayGameStatus(id, game);
 
-		int res1 = game.enviaJogada(id1, 0);
-		int res2 = game.enviaJogada(id2, 3);
-		System.out.println(res1 + " " + res2);
-		System.out.println(game.obtemGrade(id1));
+		int res1 = game.enviaJogada(id, readPosition());
+		System.out.println(game.obtemGrade(id));
+	}
 
-		res1 = game.enviaJogada(id1, 1);
-		res2 = game.enviaJogada(id2, 4);
-		System.out.println(res1 + " " + res2);
-		System.out.println(game.obtemGrade(id1));
+	private static void displayGameStatus(Integer id, GameInterface game) throws RemoteException {
+		System.out.println("Estado atual do jogo:\n" + game.obtemGrade(id));
+	}
 
-		res1 = game.enviaJogada(id1, 2);
-		res2 = game.enviaJogada(id2, 5);
-		System.out.println(res1 + " " + res2);
-		System.out.println(game.obtemGrade(id1));
+	private static String readString() throws IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		return br.readLine();
+	}
 
+	private static int readPosition() {
+		Scanner in = new Scanner(System.in);
+		int i = -1;
+		while (i < 0 && i > 8) {
+			System.err.println("Digite um número entre 0 e 8");
+			i = in.nextInt();
+		}
+		return i;
 	}
 }

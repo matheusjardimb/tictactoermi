@@ -7,7 +7,7 @@ import com.matheusjardimb.exception.InvalidPlayerNameException;
 import com.matheusjardimb.exception.PlayerLimitReachedException;
 
 public class PlayerFactory {
-	private static final int PLAYERS_LIMIT = 50;
+	private static final int PLAYERS_LIMIT = 100;
 	private static final ArrayList<Player> players = new ArrayList<Player>();
 	private static final ArrayList<Match> matches = new ArrayList<Match>();
 
@@ -55,8 +55,7 @@ public class PlayerFactory {
 	}
 
 	public static class Player {
-		// TODO 2min
-		private static final long TIMEOUT = 4 * 1000;
+		private static final long TIMEOUT = 2 * 60 * 1000;
 
 		private String name;
 		private Date created_at;
@@ -124,12 +123,14 @@ public class PlayerFactory {
 				if (match.hasX()) {
 					return Match.O;
 				}
+				return Match.NO_MATCH;
 			}
 
 			if (p.equals(match.getX())) {
 				if (match.hasO()) {
 					return Match.X;
 				}
+				return Match.NO_MATCH;
 			}
 		}
 
