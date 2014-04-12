@@ -8,15 +8,17 @@ public class Match {
 	// TODO enum?
 	public static final int TIMEOUT = -11;
 	public static final int ERROR = -10;
+	public static final int OCCUPIED_POSITION = -8;
+	public static final int OK = -7;
 	public static final int WINNER = -6;
 	public static final int LOOSER = -5;
 	public static final int NO_MATCH = -4;
 	public static final int YES = -3;
 	public static final int NO = -2;
-
 	public static final int X = -1;
 	public static final int NONE = 0;
 	public static final int O = 1;
+	public static final int DRAW = 2;
 
 	private Player playerX;
 	private Date playerXStart;
@@ -70,12 +72,10 @@ public class Match {
 			for (int column = 0; column < board.length; column++) {
 				if (board[line][column] == Match.X) {
 					res += " X ";
-				}
-				if (board[line][column] == Match.O) {
+				} else if (board[line][column] == Match.O) {
 					res += " O ";
-				}
-				if (board[line][column] == Match.NONE) {
-					res += "   ";
+				} else {
+					res += " " + (line * 3 + column) + " ";
 				}
 
 				if (column == 0 || column == 1)
@@ -91,13 +91,31 @@ public class Match {
 	}
 
 	public int getWinner() {
-		if (checkLines() == 1 || checkColumns() == 1 || checkDiagonals() == 1)
-			return 1;
+		if (checkLines() == Match.O || checkColumns() == Match.O || checkDiagonals() == Match.O) {
+			return Match.O;
+		}
 
-		if (checkLines() == -1 || checkColumns() == -1 || checkDiagonals() == -1)
-			return -1;
+		if (checkLines() == Match.X || checkColumns() == Match.X || checkDiagonals() == Match.X) {
+			return Match.X;
+		}
 
-		return 0;
+		if (allChecked()) {
+			return Match.DRAW;
+		}
+
+		return Match.NONE;
+	}
+
+	private boolean allChecked() {
+		int i = 0;
+		for (int line = 0; line < board.length; line++) {
+			for (int column = 0; column < board.length; column++) {
+				if (board[line][column] != Match.NONE) {
+					i++;
+				}
+			}
+		}
+		return i == 9;
 	}
 
 	private int checkLines() {

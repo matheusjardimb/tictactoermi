@@ -36,10 +36,7 @@ public class GameClient {
 			System.out.println("...Buscando por um oponente...");
 			res = game.temPartida(id);
 
-			try {
-				Thread.sleep(RETRY);
-			} catch (InterruptedException e) {
-			}
+			sleep();
 		}
 		return res;
 	}
@@ -51,7 +48,16 @@ public class GameClient {
 	 * ter acabado o prazo
 	 * 
 	 * 2. JavaDoc
+	 * 
+	 * 3. Sysout no server
 	 */
+
+	private static void sleep() {
+		try {
+			Thread.sleep(RETRY);
+		} catch (InterruptedException e) {
+		}
+	}
 
 	/**
 	 * @throws IOException
@@ -65,19 +71,60 @@ public class GameClient {
 
 		System.out.println("Digite seu nome: ");
 		String name = readString();
-		
+
 		Integer id = game.registraJogador(name);
 		System.out.println("Olá, " + name + ", seu id é " + id);
 
-		Integer resp1 = obtemPartida(game, id);
+		obtemPartida(game, id);
 		System.out.println("Oponente encontrado!");
 
 		String opponent = game.obtemOponente(id);
 		System.out.println("Seu oponente é: " + opponent);
-		displayGameStatus(id, game);
 
-		int res1 = game.enviaJogada(id, readPosition());
-		System.out.println(game.obtemGrade(id));
+		playMatch(game, id);
+	}
+
+	private static void playMatch(GameInterface game, Integer id) throws RemoteException {
+		int res1 = Match.OK;
+		while (res1 != Match.ERROR && res1 != Match.TIMEOUT) {
+			int res = waitMyTurn(game, id);
+			displayGameStatus(id, game);
+
+			if (res == Match.LOOSER) {
+				System.out.println("Partida encerrada - você PERDEU!");
+				return;
+			}
+
+			if (res == Match.WINNER) {
+				System.out.println("Partida encerrada - você VENCEU!");
+				return;
+			}
+
+			if (res == Match.DRAW) {
+				System.out.println("Partida encerrada - EMPATOU!");
+				return;
+			}
+
+			do {
+				res1 = game.enviaJogada(id, readPosition());
+				if (res1 == Match.OCCUPIED_POSITION) {
+					System.out.println("Posição ocupada, tente outra");
+				}
+			} while (res1 == Match.OCCUPIED_POSITION);
+			displayGameStatus(id, game);
+		}
+		displayGameStatus(id, game);
+	}
+
+	private static int waitMyTurn(GameInterface game, Integer id) throws RemoteException {
+		int res = Match.NO;
+
+		while (res == Match.NO) {
+			res = game.ehMinhaVez(id);
+			sleep();
+			System.out.println("Esperando ser sua vez");
+		}
+		return res;
 	}
 
 	private static void displayGameStatus(Integer id, GameInterface game) throws RemoteException {
@@ -90,12 +137,13 @@ public class GameClient {
 	}
 
 	private static int readPosition() {
+		@SuppressWarnings("resource")
 		Scanner in = new Scanner(System.in);
-		int i = -1;
-		while (i < 0 && i > 8) {
-			System.err.println("Digite um número entre 0 e 8");
+		int i = 0;
+		do {
+			System.out.println("Digite um número entre 0 e 8");
 			i = in.nextInt();
-		}
+		} while (i < 0 || i > 8);
 		return i;
 	}
 }

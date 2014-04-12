@@ -215,20 +215,38 @@ public class PlayerFactory {
 
 		int winner = match.getWinner();
 		if (winner != Match.NONE) {
-			if (winner == p.getId()) {
+			if (winner == Match.O && match.getO().equals(p)) {
 				return Match.WINNER;
+			} else if (winner == Match.X && match.getX().equals(p)) {
+				return Match.WINNER;
+			} else if (winner == Match.DRAW) {
+				return Match.DRAW;
 			}
 			return Match.LOOSER;
 		}
 
-		if (match.getLastPlayer() != p.getId()) {
-			return Match.YES;
+		if ((match.getLastPlayer() == Match.O && match.getO().getId() == p.getId()) || (match.getLastPlayer() == Match.X && match.getX().getId() == p.getId())) {
+			return Match.NO;
 		}
 
-		return Match.NO;
+		return Match.YES;
 	}
 
 	public static int setPosition(Integer id, Integer pos) {
+		/**
+		 * TODO
+		 * 
+		 * Retorna: 2 (partida encerrada, o que ocorrerá caso o jogador demore
+		 * muito para enviar a sua jogada e ocorra o time-out de 30 segundos
+		 * para envio de jogadas),
+		 * 
+		 * 1 (tudo certo),
+		 * 
+		 * 0 (posição ocupada)
+		 * 
+		 * -1 (erro)
+		 */
+
 		Player p = playerExist(id);
 		if (p == null) {
 			return Match.ERROR;
