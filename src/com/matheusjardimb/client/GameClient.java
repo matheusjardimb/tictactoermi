@@ -50,6 +50,8 @@ public class GameClient {
 	 * 2. JavaDoc
 	 * 
 	 * 3. Sysout no server
+	 * 
+	 * 4. Id randomico
 	 */
 
 	private static void sleep() {

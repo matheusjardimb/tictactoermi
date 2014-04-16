@@ -5,7 +5,6 @@ import java.util.Date;
 import com.matheusjardimb.PlayerFactory.Player;
 
 public class Match {
-	// TODO enum?
 	public static final int TIMEOUT = -11;
 	public static final int ERROR = -10;
 	public static final int OCCUPIED_POSITION = -8;
