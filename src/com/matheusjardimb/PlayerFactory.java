@@ -56,18 +56,19 @@ public class PlayerFactory {
 
 	public static class Player {
 		private static final long TIMEOUT = 2 * 60 * 1000;
+		private static Random randomNumber = new Random();
+		private static int nextHalf_id = 1;
 
 		private String name;
 		private Date created_at;
 
-		// TODO should be random
 		private int id;
 
 		private Player(String name, int id) {
 			super();
 			this.name = name;
 			this.created_at = new Date();
-			this.id = id;
+			this.id = getNextId();
 		}
 
 		public String getName() {
@@ -84,6 +85,10 @@ public class PlayerFactory {
 
 		public int getId() {
 			return id;
+		}
+		
+		private int getNextId() {
+			return (nextHalf_id++)<<8 | randomNumber.nextInt(256);
 		}
 
 		// TODO review/test this method
