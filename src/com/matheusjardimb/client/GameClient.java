@@ -8,6 +8,7 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.Scanner;
 
+import com.matheusjardimb.GameInterface;
 import com.matheusjardimb.Match;
 import com.matheusjardimb.exception.InvalidPlayerNameException;
 import com.matheusjardimb.exception.PlayerLimitReachedException;
@@ -40,19 +41,6 @@ public class GameClient {
 		}
 		return res;
 	}
-
-	/**
-	 * TODO
-	 * 
-	 * 1.Destruir a partida se ambos os usuarios conhecem o resultado, mesmo sem
-	 * ter acabado o prazo
-	 * 
-	 * 2. JavaDoc
-	 * 
-	 * 3. Sysout no server
-	 * 
-	 * 4. Id randomico
-	 */
 
 	private static void sleep() {
 		try {

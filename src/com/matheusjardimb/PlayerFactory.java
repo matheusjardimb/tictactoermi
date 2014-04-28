@@ -2,6 +2,7 @@ package com.matheusjardimb;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Random;
 
 import com.matheusjardimb.exception.InvalidPlayerNameException;
 import com.matheusjardimb.exception.PlayerLimitReachedException;

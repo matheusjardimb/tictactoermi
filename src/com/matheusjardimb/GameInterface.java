@@ -1,4 +1,4 @@
-package com.matheusjardimb.client;
+package com.matheusjardimb;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;

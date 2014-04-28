@@ -3,9 +3,9 @@ package com.matheusjardimb.server;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
+import com.matheusjardimb.GameInterface;
 import com.matheusjardimb.PlayerFactory;
 import com.matheusjardimb.PlayerFactory.Player;
-import com.matheusjardimb.client.GameInterface;
 import com.matheusjardimb.exception.InvalidPlayerNameException;
 import com.matheusjardimb.exception.PlayerLimitReachedException;
 
