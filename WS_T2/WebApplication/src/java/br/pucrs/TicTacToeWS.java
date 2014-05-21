@@ -24,4 +24,12 @@ public class TicTacToeWS {
     public String hello(@WebParam(name = "name") String txt) {
         return "Hello " + txt + " !";
     }
+    
+    /**
+     * This is a sample web service operation
+     */
+    @WebMethod(operationName = "hi")
+    public String hi(@WebParam(name = "name") String txt) {
+        return "Hi " + txt + " !";
+    }
 }
