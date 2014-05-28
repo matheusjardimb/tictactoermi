@@ -1,5 +1,6 @@
 package br.pucrs;
 
+import com.matheusjardimb.client.GameClient;
 import javax.jws.WebService;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
@@ -12,7 +13,7 @@ public class TicTacToeWS {
     */
     @WebMethod(operationName = "preRegistro")
     public String preRegistro(@WebParam(name = "name") String txt, @WebParam(name = "id") Integer id) {
-        return "Hello " + txt + " !";
+        return "Hello ";
     }
     
     /*  operação 1 – registraJogador (relacionada ao jogo propriamente dito): recebe o nome do usuário 

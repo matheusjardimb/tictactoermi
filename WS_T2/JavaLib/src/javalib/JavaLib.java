@@ -4,20 +4,19 @@
  * and open the template in the editor.
  */
 
-package tictactoeclient;
+package javalib;
 
 /**
  *
  * @author matheusjardimb
  */
-public class TicTacToeClient {
+public class JavaLib {
 
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        GameClient a;
     }
     
 }
