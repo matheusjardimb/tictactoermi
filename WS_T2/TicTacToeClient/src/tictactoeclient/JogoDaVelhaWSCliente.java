@@ -18,7 +18,7 @@ public class JogoDaVelhaWSCliente {
         public static void main(String[] args) throws FileNotFoundException {
         
         // Apenas para execução dentro do NetBeans
-        FileInputStream is = new FileInputStream(new File("teste-001.in"));
+        FileInputStream is = new FileInputStream(new File("C:\\test_01.in"));
         System.setIn(is);
         
         Scanner leitura = new Scanner(System.in);
