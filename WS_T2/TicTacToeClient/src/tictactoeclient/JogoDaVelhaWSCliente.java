@@ -38,7 +38,7 @@ public class JogoDaVelhaWSCliente {
                     if (param.length!=1)
                         erro(op+1);
                     else
-//                        System.out.println(registraJogador(param[0]));
+                        System.out.println(registraJogador(param[0]));
                     break;
                 case 2:  // temPartida
                     if (param.length!=1)
@@ -85,5 +85,11 @@ public class JogoDaVelhaWSCliente {
         tictactoeclient.TicTacToeWS_Service service = new tictactoeclient.TicTacToeWS_Service();
         tictactoeclient.TicTacToeWS port = service.getTicTacToeWSPort();
         return port.preRegistro(name, id);
+    }
+
+    private static Integer registraJogador(java.lang.String name) {
+        tictactoeclient.TicTacToeWS_Service service = new tictactoeclient.TicTacToeWS_Service();
+        tictactoeclient.TicTacToeWS port = service.getTicTacToeWSPort();
+        return port.registraJogador(name);
     }
 }

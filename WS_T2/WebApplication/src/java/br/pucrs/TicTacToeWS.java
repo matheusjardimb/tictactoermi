@@ -1,5 +1,6 @@
 package br.pucrs;
 
+import com.matheusjardimb.PlayerFactory;
 import com.matheusjardimb.client.GameClient;
 import com.matheusjardimb.server.Game;
 import javax.jws.WebMethod;
@@ -13,8 +14,9 @@ public class TicTacToeWS {
     informa ao servidor o nome de usuário e o respectivo identificador que o servidor deverá utilizar para este usuário;
     */
     @WebMethod(operationName = "preRegistro")
-    public String preRegistro(@WebParam(name = "name") String txt, @WebParam(name = "id") Integer id) {
-        return "Hello ";
+    public String preRegistro(@WebParam(name = "name") String name, @WebParam(name = "id") Integer id) {
+        PlayerFactory.preRegister(name, id);
+        return "";
     }
     
     /*  operação 1 – registraJogador (relacionada ao jogo propriamente dito): recebe o nome do usuário 
@@ -22,8 +24,8 @@ e retorna como resposta o identificador (valor inteiro) que identifica este usu�
 no sistema (este identificador será utilizado nas chamadas subsequentes);
     */
     @WebMethod(operationName = "registraJogador")
-    public Integer registraJogador(@WebParam(name = "name") String txt) {
-        return 0;
+    public Integer registraJogador(@WebParam(name = "name") String name) {
+        return PlayerFactory.registerPlayer(name).getId();
     }
     
     /*operação 2 – temPartida (relacionada ao jogo propriamente dito): recebe o identificador do 
@@ -68,7 +70,6 @@ usuário e retorna uma cadeia de caracteres (String) vazia (em caso de erro) ou 
 caracteres com o nome do oponente. */
     @WebMethod(operationName = "obtemOponente")
     public String obtemOponente(@WebParam(name = "id") Integer id) {
-        Game g;
         return "Hello ";
     }    
 }
