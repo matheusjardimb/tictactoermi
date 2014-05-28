@@ -6,6 +6,9 @@
 
 package tictactoeclient;
 
+import com.matheusjardimb.client.GameClient;
+import com.matheusjardimb.server.Game;
+
 /**
  *
  * @author matheusjardimb
@@ -17,7 +20,7 @@ public class TicTacToeClient {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        GameClient a;
+        Game a;
     }
     
 }

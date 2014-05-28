@@ -1,9 +1,10 @@
 package br.pucrs;
 
 import com.matheusjardimb.client.GameClient;
-import javax.jws.WebService;
+import com.matheusjardimb.server.Game;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
+import javax.jws.WebService;
 
 @WebService(serviceName = "TicTacToeWS")
 public class TicTacToeWS {
@@ -67,6 +68,7 @@ usuário e retorna uma cadeia de caracteres (String) vazia (em caso de erro) ou 
 caracteres com o nome do oponente. */
     @WebMethod(operationName = "obtemOponente")
     public String obtemOponente(@WebParam(name = "id") Integer id) {
+        Game g;
         return "Hello ";
     }    
 }
