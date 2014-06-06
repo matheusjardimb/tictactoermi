@@ -15,6 +15,7 @@ public class TicTacToeWS {
     */
     @WebMethod(operationName = "preRegistro")
     public String preRegistro(@WebParam(name = "name") String name, @WebParam(name = "id") Integer id) {
+        System.out.println("preRegistro");
         PlayerFactory.preRegister(name, id);
         return "";
     }
@@ -25,6 +26,7 @@ no sistema (este identificador será utilizado nas chamadas subsequentes);
     */
     @WebMethod(operationName = "registraJogador")
     public Integer registraJogador(@WebParam(name = "name") String name) {
+        System.out.println("registraJogador");
         return PlayerFactory.registerPlayer(name).getId();
     }
     
@@ -34,7 +36,8 @@ usuário e retorna um valor inteiro que pode ser -2 (tempo de espera esgotado), 
 partida e o jogador é o segundo a jogar, usando “O”); */
     @WebMethod(operationName = "temPartida")
     public Integer temPartida(@WebParam(name = "id") Integer id) {
-        return 0;
+        System.out.println("temPartida");
+        return PlayerFactory.assignToMatch(id);
     }
     
     /* operação 3 – ehMinhaVez (relacionada ao jogo propriamente dito): recebe o identificador do 
@@ -42,7 +45,8 @@ usuário e retorna um valor inteiro que pode ser -1 (erro), 0 (não), 1 (sim), 2
 o perdedor) ou 4 (houve empate); */
     @WebMethod(operationName = "ehMinhaVez")
     public Integer ehMinhaVez(@WebParam(name = "id") Integer id) {
-        return 0;
+        System.out.println("ehMinhaVez");
+        return PlayerFactory.isPlayerTurn(id);
     }
     
     /*  operação 4 – obtemGrade (relacionada ao jogo propriamente dito): recebe o identificador do 
@@ -52,7 +56,8 @@ caracteres com a representação da grade de jogo apresentada de forma linear, s
 jogador 1 e “O” para jogada do jogador 2); */
     @WebMethod(operationName = "obtemGrade")
     public String obtemGrade(@WebParam(name = "id") Integer id) {
-        return "Hello " ;
+        System.out.println("obtemGrade");
+        return PlayerFactory.getBoard(id);
     }
     
     /* operação 5 – enviaJogada (relacionada ao jogo propriamente dito): recebe o identificador do 
@@ -62,7 +67,8 @@ demorasse muito para enviar a sua jogada, o que não será testado nesta impleme
 certo), 0 (posição ocupada) ou -1 (erro); */
     @WebMethod(operationName = "enviaJogada")
     public Integer enviaJogada(@WebParam(name = "id") Integer id, @WebParam(name = "jogada") Integer jogada) {
-        return 0;
+        System.out.println("enviaJogada");
+        return PlayerFactory.setPosition(id, jogada);
     }
     
     /* operação 6 – obtemOponente (relacionada ao jogo propriamente dito): recebe o identificador do 
@@ -70,6 +76,7 @@ usuário e retorna uma cadeia de caracteres (String) vazia (em caso de erro) ou 
 caracteres com o nome do oponente. */
     @WebMethod(operationName = "obtemOponente")
     public String obtemOponente(@WebParam(name = "id") Integer id) {
-        return "Hello ";
+        System.out.println("obtemOponente");
+        return PlayerFactory.getOpponent(id);
     }    
 }

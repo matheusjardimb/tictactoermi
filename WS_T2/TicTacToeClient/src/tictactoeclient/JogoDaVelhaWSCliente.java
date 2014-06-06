@@ -18,7 +18,7 @@ public class JogoDaVelhaWSCliente {
         public static void main(String[] args) throws FileNotFoundException {
         
         // Apenas para execução dentro do NetBeans
-        FileInputStream is = new FileInputStream(new File("C:\\test_01.in"));
+        FileInputStream is = new FileInputStream(new File("H:\\ws\\tictactoermi-master\\WS_T2\\TicTacToeClient\\src\\testfiles\\test_01.in"));
         System.setIn(is);
         
         Scanner leitura = new Scanner(System.in);
@@ -32,7 +32,7 @@ public class JogoDaVelhaWSCliente {
                     if (param.length!=2)
                         erro(op+1);
                     else
-                        System.out.println(preRegistro(param[0],Integer.parseInt(param[1])));
+                        System.out.println("preregistro" + preRegistro(param[0],Integer.parseInt(param[1])));
                     break;
                 case 1: // registraJogador
                     if (param.length!=1)
@@ -44,31 +44,31 @@ public class JogoDaVelhaWSCliente {
                     if (param.length!=1)
                         erro(op+1);
                     else
-//                        System.out.println(temPartida(Integer.parseInt(param[0])));
+                        System.out.println(temPartida(Integer.parseInt(param[0])));
                     break;
                 case 3: // ehMinhaVez
                     if (param.length!=1)
                         erro(op+1);
                     else
-//                        System.out.println(ehMinhaVez(Integer.parseInt(param[0])));                        
+                        System.out.println(ehMinhaVez(Integer.parseInt(param[0])));                        
                     break;
                 case 4: // obtemGrade
                     if (param.length!=1)
                         erro(op+1);
                     else
-//                        System.out.println(obtemGrade(Integer.parseInt(param[0])));                        
+                        System.out.println(obtemGrade(Integer.parseInt(param[0])));                        
                     break;
                 case 5: // enviaJogada
                     if (param.length!=2)
                         erro(op+1);
                     else
-//                        System.out.println(enviaJogada(Integer.parseInt(param[0]),Integer.parseInt(param[1])));
+                        System.out.println(enviaJogada(Integer.parseInt(param[0]),Integer.parseInt(param[1])));
                     break;
                 case 6:  // obtemOponente
                     if (param.length!=1)
                         erro(op+1);
                     else
-//                        System.out.println(obtemOponente(Integer.parseInt(param[0])));
+                        System.out.println(obtemOponente(Integer.parseInt(param[0])));
                     break;
                 default:
                     erro(op+1);
@@ -92,4 +92,36 @@ public class JogoDaVelhaWSCliente {
         tictactoeclient.TicTacToeWS port = service.getTicTacToeWSPort();
         return port.registraJogador(name);
     }
+
+    private static Integer temPartida(int parseInt) {
+        tictactoeclient.TicTacToeWS_Service service = new tictactoeclient.TicTacToeWS_Service();
+        tictactoeclient.TicTacToeWS port = service.getTicTacToeWSPort();
+        return port.temPartida(parseInt);
+    }
+
+    private static Integer ehMinhaVez(int id) {
+        tictactoeclient.TicTacToeWS_Service service = new tictactoeclient.TicTacToeWS_Service();
+        tictactoeclient.TicTacToeWS port = service.getTicTacToeWSPort();
+        return port.ehMinhaVez(id);
+    }
+
+    private static String obtemGrade(int id) {
+        tictactoeclient.TicTacToeWS_Service service = new tictactoeclient.TicTacToeWS_Service();
+        tictactoeclient.TicTacToeWS port = service.getTicTacToeWSPort();
+        return port.obtemGrade(id);
+    }
+
+    private static Integer enviaJogada(int id, int jogada) {
+        tictactoeclient.TicTacToeWS_Service service = new tictactoeclient.TicTacToeWS_Service();
+        tictactoeclient.TicTacToeWS port = service.getTicTacToeWSPort();
+        return port.enviaJogada(id,jogada);
+    }
+
+    private static String obtemOponente(int parseInt) {
+        tictactoeclient.TicTacToeWS_Service service = new tictactoeclient.TicTacToeWS_Service();
+        tictactoeclient.TicTacToeWS port = service.getTicTacToeWSPort();
+        return port.obtemOponente(parseInt);
+    }
+    
+    
 }

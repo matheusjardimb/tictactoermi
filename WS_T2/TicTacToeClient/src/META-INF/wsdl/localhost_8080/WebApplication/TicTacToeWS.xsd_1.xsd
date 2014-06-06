@@ -40,6 +40,18 @@
 </xs:sequence>
 </xs:complexType>
 
+<xs:complexType name="obtemOponente">
+<xs:sequence>
+<xs:element name="id" type="xs:int" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="obtemOponenteResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
 <xs:complexType name="enviaJogada">
 <xs:sequence>
 <xs:element name="id" type="xs:int" minOccurs="0"/>
@@ -50,18 +62,6 @@
 <xs:complexType name="enviaJogadaResponse">
 <xs:sequence>
 <xs:element name="return" type="xs:int" minOccurs="0"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="obtemOponente">
-<xs:sequence>
-<xs:element name="id" type="xs:int" minOccurs="0"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="obtemOponenteResponse">
-<xs:sequence>
-<xs:element name="return" type="xs:string" minOccurs="0"/>
 </xs:sequence>
 </xs:complexType>
 
@@ -77,18 +77,6 @@
 </xs:sequence>
 </xs:complexType>
 
-<xs:complexType name="temPartida">
-<xs:sequence>
-<xs:element name="id" type="xs:int" minOccurs="0"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="temPartidaResponse">
-<xs:sequence>
-<xs:element name="return" type="xs:int" minOccurs="0"/>
-</xs:sequence>
-</xs:complexType>
-
 <xs:complexType name="ehMinhaVez">
 <xs:sequence>
 <xs:element name="id" type="xs:int" minOccurs="0"/>
@@ -96,6 +84,18 @@
 </xs:complexType>
 
 <xs:complexType name="ehMinhaVezResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:int" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="temPartida">
+<xs:sequence>
+<xs:element name="id" type="xs:int" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="temPartidaResponse">
 <xs:sequence>
 <xs:element name="return" type="xs:int" minOccurs="0"/>
 </xs:sequence>

@@ -10,17 +10,11 @@
 <message name="registraJogadorResponse">
 <part name="parameters" element="tns:registraJogadorResponse"/>
 </message>
-<message name="obtemOponente">
-<part name="parameters" element="tns:obtemOponente"/>
+<message name="temPartida">
+<part name="parameters" element="tns:temPartida"/>
 </message>
-<message name="obtemOponenteResponse">
-<part name="parameters" element="tns:obtemOponenteResponse"/>
-</message>
-<message name="ehMinhaVez">
-<part name="parameters" element="tns:ehMinhaVez"/>
-</message>
-<message name="ehMinhaVezResponse">
-<part name="parameters" element="tns:ehMinhaVezResponse"/>
+<message name="temPartidaResponse">
+<part name="parameters" element="tns:temPartidaResponse"/>
 </message>
 <message name="preRegistro">
 <part name="parameters" element="tns:preRegistro"/>
@@ -28,11 +22,11 @@
 <message name="preRegistroResponse">
 <part name="parameters" element="tns:preRegistroResponse"/>
 </message>
-<message name="temPartida">
-<part name="parameters" element="tns:temPartida"/>
+<message name="ehMinhaVez">
+<part name="parameters" element="tns:ehMinhaVez"/>
 </message>
-<message name="temPartidaResponse">
-<part name="parameters" element="tns:temPartidaResponse"/>
+<message name="ehMinhaVezResponse">
+<part name="parameters" element="tns:ehMinhaVezResponse"/>
 </message>
 <message name="obtemGrade">
 <part name="parameters" element="tns:obtemGrade"/>
@@ -46,26 +40,28 @@
 <message name="enviaJogadaResponse">
 <part name="parameters" element="tns:enviaJogadaResponse"/>
 </message>
+<message name="obtemOponente">
+<part name="parameters" element="tns:obtemOponente"/>
+</message>
+<message name="obtemOponenteResponse">
+<part name="parameters" element="tns:obtemOponenteResponse"/>
+</message>
 <portType name="TicTacToeWS">
 <operation name="registraJogador">
 <input wsam:Action="http://pucrs.br/TicTacToeWS/registraJogadorRequest" message="tns:registraJogador"/>
 <output wsam:Action="http://pucrs.br/TicTacToeWS/registraJogadorResponse" message="tns:registraJogadorResponse"/>
 </operation>
-<operation name="obtemOponente">
-<input wsam:Action="http://pucrs.br/TicTacToeWS/obtemOponenteRequest" message="tns:obtemOponente"/>
-<output wsam:Action="http://pucrs.br/TicTacToeWS/obtemOponenteResponse" message="tns:obtemOponenteResponse"/>
-</operation>
-<operation name="ehMinhaVez">
-<input wsam:Action="http://pucrs.br/TicTacToeWS/ehMinhaVezRequest" message="tns:ehMinhaVez"/>
-<output wsam:Action="http://pucrs.br/TicTacToeWS/ehMinhaVezResponse" message="tns:ehMinhaVezResponse"/>
+<operation name="temPartida">
+<input wsam:Action="http://pucrs.br/TicTacToeWS/temPartidaRequest" message="tns:temPartida"/>
+<output wsam:Action="http://pucrs.br/TicTacToeWS/temPartidaResponse" message="tns:temPartidaResponse"/>
 </operation>
 <operation name="preRegistro">
 <input wsam:Action="http://pucrs.br/TicTacToeWS/preRegistroRequest" message="tns:preRegistro"/>
 <output wsam:Action="http://pucrs.br/TicTacToeWS/preRegistroResponse" message="tns:preRegistroResponse"/>
 </operation>
-<operation name="temPartida">
-<input wsam:Action="http://pucrs.br/TicTacToeWS/temPartidaRequest" message="tns:temPartida"/>
-<output wsam:Action="http://pucrs.br/TicTacToeWS/temPartidaResponse" message="tns:temPartidaResponse"/>
+<operation name="ehMinhaVez">
+<input wsam:Action="http://pucrs.br/TicTacToeWS/ehMinhaVezRequest" message="tns:ehMinhaVez"/>
+<output wsam:Action="http://pucrs.br/TicTacToeWS/ehMinhaVezResponse" message="tns:ehMinhaVezResponse"/>
 </operation>
 <operation name="obtemGrade">
 <input wsam:Action="http://pucrs.br/TicTacToeWS/obtemGradeRequest" message="tns:obtemGrade"/>
@@ -74,6 +70,10 @@
 <operation name="enviaJogada">
 <input wsam:Action="http://pucrs.br/TicTacToeWS/enviaJogadaRequest" message="tns:enviaJogada"/>
 <output wsam:Action="http://pucrs.br/TicTacToeWS/enviaJogadaResponse" message="tns:enviaJogadaResponse"/>
+</operation>
+<operation name="obtemOponente">
+<input wsam:Action="http://pucrs.br/TicTacToeWS/obtemOponenteRequest" message="tns:obtemOponente"/>
+<output wsam:Action="http://pucrs.br/TicTacToeWS/obtemOponenteResponse" message="tns:obtemOponenteResponse"/>
 </operation>
 </portType>
 <binding name="TicTacToeWSPortBinding" type="tns:TicTacToeWS">
@@ -87,16 +87,7 @@
 <soap:body use="literal"/>
 </output>
 </operation>
-<operation name="obtemOponente">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal"/>
-</input>
-<output>
-<soap:body use="literal"/>
-</output>
-</operation>
-<operation name="ehMinhaVez">
+<operation name="temPartida">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal"/>
@@ -114,7 +105,7 @@
 <soap:body use="literal"/>
 </output>
 </operation>
-<operation name="temPartida">
+<operation name="ehMinhaVez">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal"/>
@@ -133,6 +124,15 @@
 </output>
 </operation>
 <operation name="enviaJogada">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+<operation name="obtemOponente">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal"/>
