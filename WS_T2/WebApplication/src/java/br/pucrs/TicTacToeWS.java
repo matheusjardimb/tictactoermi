@@ -1,6 +1,8 @@
 package br.pucrs;
 
+import com.matheusjardimb.Match;
 import com.matheusjardimb.PlayerFactory;
+import com.matheusjardimb.PlayerFactory.Player;
 import com.matheusjardimb.client.GameClient;
 import com.matheusjardimb.server.Game;
 import javax.jws.WebMethod;
@@ -27,7 +29,13 @@ no sistema (este identificador será utilizado nas chamadas subsequentes);
     @WebMethod(operationName = "registraJogador")
     public Integer registraJogador(@WebParam(name = "name") String name) {
         System.out.println("registraJogador");
-        return PlayerFactory.registerPlayer(name).getId();
+        Player player = PlayerFactory.registerPlayer(name);
+        if (player == null){
+            return Match.ERROR;
+        }
+        int id  = player.getId();
+        PlayerFactory.assignToMatch(id);
+        return id;
     }
     
     /*operação 2 – temPartida (relacionada ao jogo propriamente dito): recebe o identificador do 

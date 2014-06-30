@@ -37,7 +37,15 @@ public class PlayerFactory {
 
         boolean b = playerExist(name);
         if (b) {
-            throw new InvalidPlayerNameException("Player name already registered");
+            Player player = getPlayer(name);
+            Match match = getMatch(player);
+            if (match != null && match.getWinner() != Match.NONE){
+                matches.remove(match);
+                players.remove(match.getO());
+                players.remove(match.getX());
+            }else{
+                throw new InvalidPlayerNameException("Player name already registered");
+            }
         }
 
         Player player = new Player(name, id);
@@ -128,13 +136,6 @@ public class PlayerFactory {
     }
 
     public static Integer assignToMatch(Integer id) {
-        // TODO
-		/*
-         * Retorna: -2 (tempo de espera esgotado), -1 (erro), 0 (ainda não há
-         * partida), 1 (sim, há partida e o jogador inicia jogando com “X”) ou 2
-         * (sim, há partida e o jogador é o segundo a jogar, usando “O”)
-         */
-
         Player p = playerExist(id);
 
         if (p == null) {
@@ -190,9 +191,12 @@ public class PlayerFactory {
 
     public static String getBoard(Integer id) {
         Player p = playerExist(id);
+        if (p == null){
+            return "";
+        }
         Match match = getMatch(p);
         if (match == null) {
-            return null;
+            return "";
         }
 
         return match.getBoardToString();
@@ -223,7 +227,7 @@ public class PlayerFactory {
             }
         }
 
-        return null;
+        return "";
     }
 
     public static int isPlayerTurn(Integer id) {
@@ -257,20 +261,6 @@ public class PlayerFactory {
     }
 
     public static int setPosition(Integer id, Integer pos) {
-        /**
-         * TODO
-         *
-         * Retorna: 2 (partida encerrada, o que ocorrerá caso o jogador demore
-         * muito para enviar a sua jogada e ocorra o time-out de 30 segundos
-         * para envio de jogadas),
-         *
-         * 1 (tudo certo),
-         *
-         * 0 (posição ocupada)
-         *
-         * -1 (erro)
-         */
-
         Player p = playerExist(id);
         if (p == null) {
             return Match.ERROR;

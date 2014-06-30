@@ -5,19 +5,20 @@ import java.util.Date;
 import com.matheusjardimb.PlayerFactory.Player;
 
 public class Match {
-	public static final int TIMEOUT = -11;
-	public static final int ERROR = -10;
-	public static final int OCCUPIED_POSITION = -8;
-	public static final int OK = -7;
-	public static final int WINNER = -6;
-	public static final int LOOSER = -5;
-	public static final int NO_MATCH = -4;
-	public static final int YES = -3;
-	public static final int NO = -2;
-	public static final int X = -1;
-	public static final int NONE = 0;
-	public static final int O = 1;
-	public static final int DRAW = 2;
+	public static final int TIMEOUT = -2;
+	public static final int ERROR = -1;
+        public static final int NO_MATCH = 0;
+	public static final int X = 1;
+        public static final int O = 2;
+	public static final int YES = 1;
+	public static final int NO = 0;
+        public static final int WINNER = 2;
+        public static final int LOOSER = 3;
+        public static final int DRAW = 4;
+	public static final int OK = 1;
+        public static final int OCCUPIED_POSITION = 0;
+        
+        public static final int NONE = 0;
 
 	private Player playerX;
 	private Date playerXStart;
@@ -70,19 +71,15 @@ public class Match {
 		for (int line = 0; line < board.length; line++) {
 			for (int column = 0; column < board.length; column++) {
 				if (board[line][column] == Match.X) {
-					res += " X ";
+					res += "X";
 				} else if (board[line][column] == Match.O) {
-					res += " O ";
+					res += "O";
 				} else {
-					res += " " + (line * 3 + column) + " ";
+					res += ".";
 				}
-
-				if (column == 0 || column == 1)
-					res += "|";
 			}
-			res += "\n";
 		}
-		return res + "\n";
+		return res;
 	}
 
 	public int getLastPlayer() {
@@ -119,43 +116,45 @@ public class Match {
 
 	private int checkLines() {
 		for (int line = 0; line < board.length; line++) {
-			if ((board[line][0] + board[line][1] + board[line][2]) == -3)
-				return -1;
-			if ((board[line][0] + board[line][1] + board[line][2]) == 3)
-				return 1;
+			if (board[line][0] == X && board[line][1]  == X && board[line][2] == X)
+				return X;
+			if (board[line][0]  == O && board[line][1]  == O && board[line][2]  == O)
+				return O;
 		}
-		return 0;
+		return NONE;
 	}
 
 	private int checkColumns() {
 		for (int column = 0; column < board.length; column++) {
-			if ((board[0][column] + board[1][column] + board[2][column]) == -3)
-				return -1;
-			if ((board[0][column] + board[1][column] + board[2][column]) == 3)
-				return 1;
+			if (board[0][column]  == X && board[1][column]  == X && board[2][column] == X )
+				return X;
+			if (board[0][column]  == O && board[1][column] == O && board[2][column]== O)
+				return O;
 		}
-		return 0;
+		return NONE;
 	}
 
 	private int checkDiagonals() {
-		if ((board[0][0] + board[1][1] + board[2][2]) == -3)
-			return -1;
-		if ((board[0][0] + board[1][1] + board[2][2]) == 3)
+		if (board[0][0] == O && board[1][1] == O && board[2][2] == O)
+			return O;
+		if (board[0][0] == X && board[1][1] == X && board[2][2]== X)
 			return 1;
-		if ((board[0][2] + board[1][1] + board[2][0]) == -3)
-			return -1;
-		if ((board[0][2] + board[1][1] + board[2][0]) == 3)
-			return 1;
+		if (board[0][2] == O && board[1][1] == O && board[2][0]== O)
+			return O;
+		if (board[0][2] == X && board[1][1] == X && board[2][0]== X)
+			return X;
 
-		return 0;
+		return NONE;
 	}
 
 	public int setPosition(Player p, Integer pos) {
-		if (getWinner() != 0) {
+		if (getWinner() != Match.NONE) {
+                        System.out.println("getWinner() != Match.NONE");
 			return Match.ERROR;
 		}
 
 		if (!isTurn(p)) {
+                        System.out.println("!isTurn(p)");
 			return Match.ERROR;
 		}
 
@@ -163,18 +162,24 @@ public class Match {
 		int l = pos / 3;
 
 		if (l > 2 || c > 2) {
+                        System.out.println("l > 2 || c > 2");
 			return ERROR;
 		}
 
 		if (board[l][c] != NONE) {
-			return ERROR;
+			return OCCUPIED_POSITION;
 		}
 
 		int mark = p.equals(getO()) ? O : X;
 		board[l][c] = mark;
-		lastPlayer *= -1;
-
-		return 0;
+                
+                if (lastPlayer == X){
+                    lastPlayer = O;
+                }else{
+                    lastPlayer = X;    
+                }
+                
+		return OK;
 	}
 
 	public boolean isTurn(Player p) {
